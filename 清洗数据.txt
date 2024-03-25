@@ -1,0 +1,14 @@
+一:更改users表
+1.更新vipTime字段
+db.users.updateMany({}, [
+  {
+    $set: {
+      vipTime: "$chatGPTTime"
+    }
+  }
+], { upsert: true })
+2.删除chatGPTTime字段
+db.users.updateMany({}, { $unset: { chatGPTTime: 1 } })
+3.将所有没有vipTime字段的加上
+db.users.updateMany({ vipTime: { $exists: false } }, { $set: { vipTime: "" } })
+二:
